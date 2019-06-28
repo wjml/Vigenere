@@ -1,0 +1,14 @@
+{
+	"name": "Vigenere",
+	"version": "1.0.0",
+	"main": "index.js",
+	"repository": "https://github.com/wjml/Vigenere.git",
+	"author": "willian <willian.lourenco@novaandradina.org>",
+	"license": "MIT",
+	"dependencies": {
+		"express": "^4.17.1"
+	},
+	"scripts": {
+		"start": "node server.js"
+	}
+}
