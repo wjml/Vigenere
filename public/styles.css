@@ -1,0 +1,12 @@
+body {
+	margin: 0;
+}
+
+.contentFlex {
+	display: flex;
+	flex-direction: column;
+}
+
+.buttonsFlex {
+	display: flex;
+}
