@@ -15,6 +15,7 @@ body {
 
 .buttonsFlex {
 	display: flex;
+	align-self: center;
 }
 
 #input,

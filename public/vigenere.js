@@ -1,25 +1,21 @@
 const alphabet = "abcdefghijklmnopqrstuvwxyz";
-const strAccent = "áàãâäéèêëíìîïóòõôöúùûüçÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÖÔÚÙÛÜÇ";
-const strNoAccent = "aaaaaeeeeiiiiooooouuuucAAAAAEEEEIIIIOOOOOUUUUC";
-rtn = "";
-var encrypt = document.getElementById("encrypt");
-var decrypt = document.getElementById("decrypt");
+const strAccent = 	"áàãâäéèêëíìîïóòõôöúùûüçñÁÀÃÂÄÉÈÊËÍÌÎÏÓÒÕÖÔÚÙÛÜÇÑ";
+const strNoAccent = 	"aaaaaeeeeiiiiooooouuuucnAAAAAEEEEIIIIOOOOOUUUUCN";
 var key = document.getElementById("key");
 var input = document.getElementById("input");
 var output = document.getElementById("output");
+rtn = "";
 
 function first() {
 	rtn = "";
 	j = 0;
-	regex = [a - zA - Z] + g;
+	regex = /[A-Z]/i
 	for (i = 0; i < input.value.length; i++) {
-		console.log(!input.value[i] == regex);
-		if (input.value[i] == /[a-z]/i || strAccent.includes(input.value[i])) {
-			if (j <= key.value.length) {
-				rtn += key.value[j++];
-			} else {
+		if (regex.test(input.value[i]) || strAccent.includes(input.value[i])) {
+			if (j >= key.value.length) {
 				j = 0;
 			}
+			rtn += key.value[j++];
 		} else {
 			rtn += " ";
 		}
@@ -28,19 +24,31 @@ function first() {
 
 function second(mode) {
 	first();
-	//mode==true: encrypt
-	//mode==false: decrypt
-	mode ? (mode = 1) : (mode = -1);
 	output.value = "";
 	for (i = 0; i < input.value.length; i++) {
-		if (!rtn[i] == " ") {
-			output.value +=
-				alphabet[
-					(alphabet.indexOf(input.value[i]) + alphabet.indexOf(rtn[i]) * mode) %
-						25
-				];
-		} else {
-			output.value += input.value[i];
-		}
+		charCrypt(input.value[i], mode)
 	}
+}
+
+function charCrypt(char, mode) {//mode==true: encrypt //mode==false: decrypt
+	regex = /[A-Z]/
+	isUpper = false
+	if (!rtn[i].includes(" ")) {
+		if (strAccent.includes(char)) char = strNoAccent[strAccent.indexOf(char)]
+		if (regex.test(char)) isUpper = true
+		switch (mode) {
+			case true:
+				char =
+					alphabet[
+					(alphabet.indexOf(char.toLowerCase()) + alphabet.indexOf(rtn[i])) % 26
+					]; break
+			case false:
+				char =
+					alphabet[
+					Math.abs((alphabet.indexOf(rtn[i]) - alphabet.indexOf(char.toLowerCase()) - 26) % 26)
+					];
+		}
+		if (isUpper) char = char.toUpperCase()
+	}
+	output.value += char
 }
